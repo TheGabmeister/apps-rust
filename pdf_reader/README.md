@@ -1,0 +1,1 @@
+Download pdfium binaries at https://github.com/bblanchon/pdfium-binaries to run .exe

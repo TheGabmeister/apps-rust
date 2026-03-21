@@ -9,6 +9,43 @@ cargo run
 
 No tests. Single binary, no external assets.
 
+## Project Overview
+
+Desktop showcase app pushing iced 0.14 + iced_aw 0.13 to their limits. Five tabs navigated via an iced_aw `Sidebar`, with a global light/dark toggle.
+
+## Architecture
+
+- `main.rs` — entry point, `iced::application` builder, font registration
+- `app.rs` — `App` state, top-level `Message` enum, `update`/`view`/`subscription`/`theme`. Each tab's messages are wrapped via `Message::TabName(tab::Message)`.
+- `sidebar.rs` — `TabId` enum (Gallery, Layouts, PaneGrid, Canvas, Mixer), sidebar view
+- `theme.rs` — theme helpers (minimal)
+- `tabs/` — each tab is a submodule with its own `State`, `Message`, `update()`, `view()`
+
+### Tab 1: Widget Gallery (`tabs/gallery/`)
+Responsive grid of demo cards for every core iced widget and iced_aw widget. `mod.rs` holds state and the responsive grid layout; each widget demo is a separate file (e.g. `buttons.rs`, `sliders.rs`, `color_picker.rs`).
+
+### Tab 2: Layouts (`tabs/layouts/`)
+Interactive layout demos: `responsive.rs`, `wrapping.rs` (iced_aw Wrap), `scrollable.rs`, `nesting.rs`, `row_column.rs`, `containers.rs`. Sliders control spacing/padding live.
+
+### Tab 3: PaneGrid (`tabs/pane_grid/`)
+Single `mod.rs`. Split/close/resize/drag panes with selectable content types (Editor, ColorSwatch, Counter, Placeholder).
+
+### Tab 4: Canvas & Art (`tabs/canvas/`)
+- `procedural_art.rs` — `canvas::Program` with 3 patterns (Spirograph, Lissajous, Particles) and 4 palettes (Rainbow, Ocean, Fire, Neon)
+- `data_viz.rs` — `canvas::Program` with animated bar chart + scrolling line chart
+- `mod.rs` — controls (pattern, palette, speed, complexity, randomize)
+
+### Tab 5: Audio Mixer (`tabs/mixer/`)
+- `channel.rs` — `Channel` struct (volume, EQ bass/treble, wave type, frequency, amplitude, color, enabled) and `WaveType` enum (Sine, Square, Sawtooth, Triangle) with `sample()` math
+- `waveform.rs` — `draw_channel_waveform()` and `draw_master_waveform()` rendering functions
+- `controls.rs` — `channel_strip()` builds the per-channel control panel
+- `mod.rs` — 4-channel mixer state, responsive layout (horizontal wide / vertical narrow), master output canvas
+
+### Subscriptions
+- `time::every(16ms)` active only on Canvas or Mixer tabs (checked in `App::subscription`)
+- `Tick(Instant)` in app.rs forwards `dt` to the active tab's update
+- Other tabs return `Subscription::none()` — zero CPU overhead
+
 ## iced 0.14 API Notes
 
 These patterns differ from older iced versions. Use these, not guesses from memory:

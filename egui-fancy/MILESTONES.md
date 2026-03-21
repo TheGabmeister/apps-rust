@@ -91,13 +91,13 @@ pub struct FancyShowcaseApp {
 
 **Single agent. Do not parallelize.**
 
-- [ ] `TileId`, `Tile { id, grid_rect, content_type }` types
-- [ ] Initial layout: 3-column grid, mixed 1×1 and 2×1 tiles
-- [ ] Tile content variants: sparkline, gauge, stat card, mini controls, text log
-- [ ] **Resize**: drag handles on tile edges/corners, adjacent tiles adjust, minimum size enforced
-- [ ] **Reorder**: drag by title bar, placeholder outline at drop position, tiles animate to make room
-- [ ] Tile painting: rounded borders, drop shadows, elevated shadow on drag
-- [ ] `cargo run` — dashboard section fully interactive
+- [x] `TileId`, `Tile { id, grid_rect, content_type }` types
+- [x] Initial layout: 3-column grid, mixed 1×1 and 2×1 tiles
+- [x] Tile content variants: sparkline, gauge, stat card, mini controls, text log
+- [x] **Resize**: drag handles on tile edges/corners, adjacent tiles adjust, minimum size enforced
+- [x] **Reorder**: drag by title bar, placeholder outline at drop position, tiles animate to make room
+- [x] Tile painting: rounded borders, drop shadows, elevated shadow on drag
+- [x] `cargo run` — dashboard section fully interactive
 
 ---
 

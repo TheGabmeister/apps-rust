@@ -9,23 +9,6 @@ This repository is a desktop-only `egui` / `eframe` showcase app meant to look p
 
 The canonical product description lives in `SPEC.md`. The milestone breakdown and locked interfaces live in `MILESTONES.md`.
 
-## Current Status
-- M1 `Foundation`: complete
-- M2 `Sections 1-3`: complete
-- M3 `Dashboard Grid`: not started
-- M4 `Sections 5-6`: not started
-- M5 `Polish`: not started
-
-Implemented today:
-- `Buttons & Interactions`
-- `Sliders & Inputs`
-- `Data Visualization`
-
-Still placeholders:
-- `Dashboard Grid`
-- `Panels & Navigation`
-- `Animated Transitions`
-
 ## Read These First
 When starting a new session, read these in this order:
 
@@ -36,7 +19,7 @@ When starting a new session, read these in this order:
 5. `src/sections/mod.rs`
 6. The specific section file you are modifying
 
-`CLAUDE.md` contains a short project summary and a few API notes, but `SPEC.md` and `MILESTONES.md` are the real source of truth.
+`SPEC.md` and `MILESTONES.md` are the real source of truth.
 
 ## Build / Verify
 Use:

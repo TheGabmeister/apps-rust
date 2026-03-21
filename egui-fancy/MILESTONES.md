@@ -69,20 +69,20 @@ pub struct FancyShowcaseApp {
 
 ## M2 — Sections 1–3
 
-- [ ] **Buttons & Interactions** (`sections/buttons.rs`)
+- [x] **Buttons & Interactions** (`sections/buttons.rs`)
   - Stock widgets: button, small_button, toggle_value, selectable_label, radio_value, hyperlink
   - Custom: hover glow effect, click ripple, animated toggle switch, sliding button group indicator
   - Two-column layout: stock left, custom right
-- [ ] **Sliders & Inputs** (`sections/sliders.rs`)
+- [x] **Sliders & Inputs** (`sections/sliders.rs`)
   - Stock widgets: Slider (H+V), DragValue, TextEdit (single + multi), color_edit_button_rgba, ComboBox, checkbox, spinner
   - Custom: two-thumb range slider, rotary knob, gradient progress bar, focus-glow text input
   - Grid layout: labeled rows, stock and custom side by side
-- [ ] **Data Visualization** (`sections/data_viz.rs`)
+- [x] **Data Visualization** (`sections/data_viz.rs`)
   - egui_plot charts: line (sine waves), bar (random-walk histogram), area (stacked sines)
   - Slider controls frequency/amplitude in real time
   - Painter-drawn: radial gauge (animated needle), sparklines, animated donut chart
-- [ ] Wire all three sections into `AppState` in `app.rs`
-- [ ] `cargo run` — sections 1–3 fully navigable
+- [x] Wire all three sections into `AppState` in `app.rs`
+- [x] `cargo run` — sections 1–3 fully navigable
 
 ---
 

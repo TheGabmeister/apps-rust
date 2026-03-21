@@ -19,6 +19,7 @@ These patterns differ from older iced versions. Use these, not guesses from memo
 - `fn view(&self) -> Element<'_, Message>` — use explicit `'_` lifetime to avoid `mismatched_lifetime_syntaxes` warning.
 - `button::primary`, `button::secondary` — style functions passed to `.style()`.
 - `container::bordered_box` — style function for bordered containers.
+- `pane_grid::Content::style(|&Theme| -> container::Style)` — uses container styles, not pane_grid-specific ones. No `pane_grid::default` or `pane_grid::default_focused` exists.
 - `checkbox(is_checked).label("...").on_toggle(Msg)` — builder pattern; NOT `checkbox("label", bool)`.
 - `toggler(is_toggled).label("...").on_toggle(Msg)` — builder pattern, not positional args.
 

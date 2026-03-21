@@ -41,7 +41,7 @@ Implement Tab 1 in full — all core iced widgets and all iced_aw widgets, laid 
 ---
 
 ## Milestone 3: Layouts + PaneGrid
-**Status:** [ ] Not started
+**Status:** [x] Complete
 
 Implement Tab 2 (Layout Demos) and Tab 3 (PaneGrid Playground).
 
@@ -54,13 +54,13 @@ Implement Tab 2 (Layout Demos) and Tab 3 (PaneGrid Playground).
 - `tabs/pane_grid/mod.rs` — full PaneGrid with split, close, resize, drag, content types
 
 ### Visual Check
-- [ ] Layout demos respond to spacing/padding sliders in real time
-- [ ] Wrap demo adds and removes items correctly
-- [ ] PaneGrid opens with 2–3 panes
-- [ ] Split horizontal / vertical works on each pane
-- [ ] Close button disabled on last remaining pane
-- [ ] Drag and resize work correctly
-- [ ] Works in both light and dark theme
+- [x] Layout demos respond to spacing/padding sliders in real time
+- [x] Wrap demo adds and removes items correctly
+- [x] PaneGrid opens with 2–3 panes
+- [x] Split horizontal / vertical works on each pane
+- [x] Close button disabled on last remaining pane
+- [x] Drag and resize work correctly
+- [x] Works in both light and dark theme
 
 ---
 

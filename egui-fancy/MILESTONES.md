@@ -98,6 +98,7 @@ pub struct FancyShowcaseApp {
 - [x] **Reorder**: drag by title bar, placeholder outline at drop position, tiles animate to make room
 - [x] Tile painting: rounded borders, drop shadows, elevated shadow on drag
 - [x] `cargo run` — dashboard section fully interactive
+- [x] `cargo clippy` clean
 
 ---
 

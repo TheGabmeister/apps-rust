@@ -1,4 +1,5 @@
 mod app;
+mod menu_bar;
 mod sidebar;
 mod tabs;
 mod theme;

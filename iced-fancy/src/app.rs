@@ -70,6 +70,7 @@ impl App {
     }
 
     pub fn view(&self) -> Element<'_, Message> {
+        let menu_bar = crate::menu_bar::view(self.active_tab, self.is_dark);
         let sidebar = crate::sidebar::view(self.active_tab, self.is_dark);
 
         let content: Element<Message> = match self.active_tab {
@@ -80,7 +81,9 @@ impl App {
             TabId::Mixer => tabs::mixer::view(&self.mixer).map(Message::Mixer),
         };
 
-        iced::widget::row![sidebar, content]
+        let body = iced::widget::row![sidebar, content].height(iced::Fill);
+
+        iced::widget::column![menu_bar, body]
             .height(iced::Fill)
             .into()
     }

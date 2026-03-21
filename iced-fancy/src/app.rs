@@ -56,7 +56,12 @@ impl App {
             Message::PaneGrid(msg) => tabs::pane_grid::update(&mut self.pane_grid, msg),
             Message::Canvas(msg) => tabs::canvas::update(&mut self.canvas, msg),
             Message::Mixer(msg) => tabs::mixer::update(&mut self.mixer, msg),
-            Message::Tick(_now) => {}
+            Message::Tick(_now) => {
+                let dt = 1.0 / 60.0_f32; // ~16ms per tick
+                if self.active_tab == TabId::Canvas || self.active_tab == TabId::Mixer {
+                    tabs::canvas::update(&mut self.canvas, tabs::canvas::Message::Tick(dt));
+                }
+            }
         }
         Task::none()
     }

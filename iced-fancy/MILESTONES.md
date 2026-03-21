@@ -65,7 +65,7 @@ Implement Tab 2 (Layout Demos) and Tab 3 (PaneGrid Playground).
 ---
 
 ## Milestone 4: Canvas & Procedural Art
-**Status:** [ ] Not started
+**Status:** [x] Complete
 
 Implement Tab 4 — generative art canvas, animated charts, and the shared `Tick` subscription.
 
@@ -76,12 +76,12 @@ Implement Tab 4 — generative art canvas, animated charts, and the shared `Tick
 - Subscription: `time::every(16ms)` active only on this tab
 
 ### Visual Check
-- [ ] Procedural art animates continuously at ~60fps
-- [ ] Speed, complexity, palette, and pattern controls update the canvas in real time
-- [ ] Bar chart and line chart animate smoothly
-- [ ] Randomize button changes chart data with animated transition
-- [ ] Switching away from this tab stops the subscription (CPU drops to idle)
-- [ ] Works in both light and dark theme
+- [x] Procedural art animates continuously at ~60fps
+- [x] Speed, complexity, palette, and pattern controls update the canvas in real time
+- [x] Bar chart and line chart animate smoothly
+- [x] Randomize button changes chart data with animated transition
+- [x] Switching away from this tab stops the subscription (CPU drops to idle)
+- [x] Works in both light and dark theme
 
 ---
 

@@ -47,14 +47,14 @@ If making a focused change, also verify the affected section manually in the app
 - `src/sections/buttons.rs`: implemented stock vs custom button demos
 - `src/sections/sliders.rs`: implemented stock vs custom input demos
 - `src/sections/data_viz.rs`: implemented plot + painter visualizations
-- `src/sections/dashboard.rs`: placeholder
-- `src/sections/panels.rs`: placeholder
-- `src/sections/transitions.rs`: placeholder
+- `src/sections/dashboard.rs`: implemented resizable/reorderable dashboard tile grid with custom-painted tile chrome
+- `src/sections/panels.rs`: implemented panel/navigation demos with animated tab underline, breadcrumbs, file tree, and custom split pane
+- `src/sections/transitions.rs`: implemented transition demos, easing visualizer, and before/after animation comparison
 
 ## Existing Conventions
 - Section state lives in section structs owned by `FancyShowcaseApp`.
-- `ButtonsSection`, `SlidersSection`, and `DataVizSection` use `Default`.
-- `DashboardSection`, `PanelsSection`, and `TransitionsSection` are currently unit structs.
+- All section structs currently implement `Default`.
+- `DashboardSection`, `PanelsSection`, and `TransitionsSection` now own non-trivial interactive state; do not treat them as placeholders or unit structs.
 - Most custom visuals are painted directly with `Painter`; keep them section-local instead of inventing a global theme/chrome system.
 - The project currently keeps logic simple and local rather than building a deep abstraction layer.
 
@@ -68,16 +68,17 @@ If making a focused change, also verify the affected section manually in the app
 - `buttons.rs`: stock button widgets plus hover glow, click ripple, animated toggle, and sliding button group
 - `sliders.rs`: stock inputs plus a custom range slider, rotary knob, gradient progress bar, and focus-glow text input
 - `data_viz.rs`: line/bar/area charts with `egui_plot`, plus painter-drawn radial gauge, sparklines, and donut chart
+- `dashboard.rs`: reorderable/resizable 3-column tile grid with sparkline, gauge, stat card, mini controls, and text log tiles
+- `panels.rs`: idiomatic panel layout demo, animated navigation tab bar, breadcrumb trail, collapsible file tree, and draggable split pane
+- `transitions.rs`: fade/slide/scale/combo transition demos, easing curve visualizer, and instant-vs-animated comparison
 
-These sections are functional, but they are not the final polish pass. If touching them, prefer incremental improvement over rewriting them from scratch.
+M1-M4 are implemented. M5 polish work remains open in `MILESTONES.md`. If touching completed sections, prefer incremental improvement over rewriting them from scratch.
 
 ## Recommended Next Work
-1. Implement M3 in `src/sections/dashboard.rs`
-2. Implement M4 in `src/sections/panels.rs` and `src/sections/transitions.rs`
-3. Run a polish pass for spacing, theme consistency, and resize behavior
-4. Finish with a clean `cargo clippy`
-
-M3 is the hardest milestone. Treat it as a single focused effort because tile layout, drag, and resize behavior are tightly coupled.
+1. Execute M5 polish work across all six sections
+2. Review spacing, theme consistency, and small-window behavior against `SPEC.md`
+3. Manually verify the more interaction-heavy sections (`dashboard`, `panels`, `transitions`) after targeted changes
+4. Keep `cargo clippy` clean after each change set
 
 ## Editing Guidance For Future Sessions
 - Match the existing project structure before adding abstractions.

@@ -9,19 +9,19 @@ A desktop-only showcase application that pushes iced 0.14 to its absolute limits
 | Crate | Version | Features |
 |-------|---------|----------|
 | `iced` | 0.14.0 | `canvas`, `tokio` |
-| `iced_aw` | 0.13.1 | `tabs`, `tab_bar`, `badge`, `card`, `color_picker`, `date_picker`, `time_picker`, `number_input`, `spinner`, `context_menu`, `wrap`, `side_bar`, `drop_down`, `menu`, `selection_list`, `slide_bar`, `typed_input` |
+| `iced_aw` | 0.13.1 | `tabs`, `tab_bar`, `badge`, `card`, `color_picker`, `date_picker`, `time_picker`, `number_input`, `spinner`, `context_menu`, `wrap`, `sidebar`, `drop_down`, `menu`, `selection_list`, `slide_bar`, `typed_input` |
 
 - **Zero external assets** — everything embedded or procedurally generated. Single binary, no asset folder.
 - `tokio` feature required for `iced::time::every` (animation subscriptions).
 - `canvas` feature required for Canvas widget and iced_aw's `color_picker`.
-- iced_aw's bundled Bootstrap font (`BOOTSTRAP_FONT_BYTES`) used for icons — no external font files.
+- iced_aw's bundled font (`ICED_AW_FONT_BYTES`) used for icons — no external font files.
 
 ---
 
 ## App Structure
 
 ### Navigation
-- **Sidebar** using iced_aw's `Tabs` widget with `TabBarPosition::Left`
+- **Sidebar** using iced_aw's `Sidebar` widget (vertical tab list with active tab tracking)
 - **No menu bar** — sidebar is the sole navigation mechanism
 - **Light/dark toggle** via `toggler` widget (uses built-in `Theme::Light` / `Theme::Dark`)
 
@@ -249,11 +249,12 @@ src/
 1. **`time::every` requires `tokio` feature** — the `thread-pool` backend has an empty `time` module
 2. **`canvas` feature must be enabled** — gates `iced::widget::canvas` and required by iced_aw's `color_picker`
 3. **`Message` cannot derive `PartialEq`** — `Instant` doesn't implement it
-4. **`TabId` must implement `Eq + Clone`** — required by iced_aw's `Tabs` widget
+4. **`TabId` must implement `Eq + Clone`** — required by iced_aw's `Sidebar` widget
+7. **`TabBarPosition` is top/bottom only** — left-side navigation must use iced_aw's `Sidebar` widget, not `Tabs`
 5. **PaneGrid last-pane guard** — `pane_grid::State::close()` returns `None` for the last pane; must prevent closing it
 6. **`responsive` widget lifetime** — closure borrows from state; use references, don't move owned data
 7. **Canvas cache invalidation** — only use `canvas::Cache` for static elements; animated layers must be redrawn each frame
-8. **iced_aw Bootstrap font** — must register via `.font(iced_aw::BOOTSTRAP_FONT_BYTES)` on the application builder for icon tab labels
+8. **iced_aw font** — must register via `.font(iced_aw::ICED_AW_FONT_BYTES)` on the application builder for icon tab labels
 
 ---
 

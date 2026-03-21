@@ -22,7 +22,7 @@ Set up the full project structure with empty tab stubs. The app should compile a
 ---
 
 ## Milestone 2: Widget Gallery
-**Status:** [ ] Not started
+**Status:** [x] Complete
 
 Implement Tab 1 in full — all core iced widgets and all iced_aw widgets, laid out in a responsive grid of demo cards.
 
@@ -32,11 +32,11 @@ Implement Tab 1 in full — all core iced widgets and all iced_aw widgets, laid 
 - iced_aw widget demos: `cards.rs`, `badges.rs`, `color_picker.rs`, `date_picker.rs`, `time_picker.rs`, `number_input.rs`, `spinner.rs`, `context_menu.rs`
 
 ### Visual Check
-- [ ] All widget cards render without panics
-- [ ] Responsive column count changes on window resize (1 / 2 / 3 / 4 cols)
-- [ ] Each widget is interactive (sliders slide, inputs accept text, pickers open, etc.)
-- [ ] Color picker, date picker, time picker popups open and close correctly
-- [ ] Works in both light and dark theme
+- [x] All widget cards render without panics
+- [x] Responsive column count changes on window resize (1 / 2 / 3 / 4 cols)
+- [x] Each widget is interactive (sliders slide, inputs accept text, pickers open, etc.)
+- [x] Color picker, date picker, time picker popups open and close correctly
+- [x] Works in both light and dark theme
 
 ---
 

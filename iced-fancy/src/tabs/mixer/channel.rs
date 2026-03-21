@@ -87,12 +87,19 @@ impl Channel {
     }
 
     /// Compute a sample at time t (seconds), with all channel parameters applied.
+    /// Bass adds/cuts a sub-harmonic at 0.5x frequency; treble adds/cuts an overtone at 3x.
     pub fn sample(&self, t: f32) -> f32 {
         if !self.enabled {
             return 0.0;
         }
-        let phase = t * self.frequency * std::f32::consts::TAU;
+        let tau = std::f32::consts::TAU;
+        let phase = t * self.frequency * tau;
         let raw = self.wave_type.sample(phase);
-        raw * self.amplitude * self.volume
+
+        let bass = self.eq_bass * (phase * 0.5).sin();
+        let treble = self.eq_treble * (phase * 3.0).sin();
+        let mixed = (raw + bass * 0.5 + treble * 0.4).clamp(-1.0, 1.0);
+
+        mixed * self.amplitude * self.volume
     }
 }

@@ -196,9 +196,14 @@ impl SlidersSection {
         let track_width = track_right - track_left;
 
         // Track background
+        let track_color = if ui.visuals().dark_mode {
+            egui::Color32::from_gray(100)
+        } else {
+            egui::Color32::from_gray(190)
+        };
         painter.line_segment(
             [egui::pos2(track_left, track_y), egui::pos2(track_right, track_y)],
-            egui::Stroke::new(4.0, egui::Color32::from_gray(100)),
+            egui::Stroke::new(4.0, track_color),
         );
 
         // Filled track between thumbs
@@ -237,7 +242,12 @@ impl SlidersSection {
         let radius = size / 2.0 - 4.0;
 
         // Outer circle
-        painter.circle_stroke(center, radius, egui::Stroke::new(3.0, egui::Color32::from_gray(120)));
+        let ring_color = if ui.visuals().dark_mode {
+            egui::Color32::from_gray(120)
+        } else {
+            egui::Color32::from_gray(180)
+        };
+        painter.circle_stroke(center, radius, egui::Stroke::new(3.0, ring_color));
 
         // Arc indicator
         let start_angle = PI * 0.75;
@@ -296,7 +306,12 @@ impl SlidersSection {
         let painter = ui.painter();
 
         // Background track
-        painter.rect_filled(rect, rect.height() / 2.0, egui::Color32::from_gray(60));
+        let track_bg = if ui.visuals().dark_mode {
+            egui::Color32::from_gray(60)
+        } else {
+            egui::Color32::from_gray(200)
+        };
+        painter.rect_filled(rect, rect.height() / 2.0, track_bg);
 
         // Filled portion with gradient via mesh
         let fill_width = rect.width() * value.clamp(0.0, 1.0);
@@ -319,12 +334,17 @@ impl SlidersSection {
         }
 
         // Percentage text
+        let text_color = if value > 0.05 {
+            egui::Color32::WHITE
+        } else {
+            ui.visuals().text_color()
+        };
         painter.text(
             rect.center(),
             egui::Align2::CENTER_CENTER,
             format!("{:.0}%", value * 100.0),
             egui::FontId::proportional(12.0),
-            egui::Color32::WHITE,
+            text_color,
         );
     }
 

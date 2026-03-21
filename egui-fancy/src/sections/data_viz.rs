@@ -55,6 +55,8 @@ impl DataVizSection {
     pub fn show(&mut self, ui: &mut egui::Ui) {
         ui.heading("Data Visualization");
         ui.add_space(8.0);
+        ui.label("egui_plot charts with interactive controls, plus custom Painter-drawn visualizations.");
+        ui.add_space(12.0);
 
         egui::ScrollArea::vertical().show(ui, |ui: &mut egui::Ui| {
             // Controls
@@ -209,7 +211,12 @@ impl DataVizSection {
         // Arc background
         let start = PI * 0.8;
         let sweep = PI * 1.4;
-        draw_arc(painter, center, radius, start, start + sweep, 6.0, egui::Color32::from_gray(80));
+        let arc_bg = if ui.visuals().dark_mode {
+            egui::Color32::from_gray(80)
+        } else {
+            egui::Color32::from_gray(200)
+        };
+        draw_arc(painter, center, radius, start, start + sweep, 6.0, arc_bg);
 
         // Filled arc
         let fill_end = start + sweep * display_val;
@@ -223,6 +230,11 @@ impl DataVizSection {
         draw_arc(painter, center, radius, start, fill_end, 6.0, fill_color);
 
         // Tick marks
+        let tick_color = if ui.visuals().dark_mode {
+            egui::Color32::from_gray(160)
+        } else {
+            egui::Color32::from_gray(140)
+        };
         for i in 0..=10 {
             let t = i as f32 / 10.0;
             let angle = start + sweep * t;
@@ -233,7 +245,7 @@ impl DataVizSection {
                     egui::pos2(center.x + angle.cos() * inner, center.y + angle.sin() * inner),
                     egui::pos2(center.x + angle.cos() * outer, center.y + angle.sin() * outer),
                 ],
-                egui::Stroke::new(1.5, egui::Color32::from_gray(160)),
+                egui::Stroke::new(1.5, tick_color),
             );
         }
 
@@ -352,12 +364,8 @@ impl DataVizSection {
             angle += sweep;
         }
 
-        // Center hole
-        let bg = if ui.visuals().dark_mode {
-            egui::Color32::from_rgb(30, 30, 38)
-        } else {
-            egui::Color32::from_rgb(250, 250, 255)
-        };
+        // Center hole — match the panel background
+        let bg = ui.visuals().panel_fill;
         painter.circle_filled(center, inner_r - 1.0, bg);
     }
 }

@@ -103,7 +103,7 @@ impl std::fmt::Debug for PanelsSection {
 impl PanelsSection {
     pub fn show(&mut self, ui: &mut egui::Ui) {
         ui.heading("Panels & Navigation");
-        ui.add_space(4.0);
+        ui.add_space(8.0);
         ui.label("Demonstrates egui's panel system, navigation patterns, and a custom split pane.");
         ui.add_space(12.0);
 

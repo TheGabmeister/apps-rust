@@ -100,7 +100,7 @@ impl Default for DashboardSection {
 impl DashboardSection {
     pub fn show(&mut self, ui: &mut egui::Ui) {
         ui.heading("Dashboard Grid");
-        ui.add_space(4.0);
+        ui.add_space(8.0);
         ui.horizontal(|ui: &mut egui::Ui| {
             ui.label(
                 egui::RichText::new("Drag title bars to reorder \u{2022} Drag edges/corners to resize")
@@ -617,6 +617,11 @@ fn render_gauge(ui: &egui::Ui, rect: egui::Rect, value: f32) {
     let sweep = PI * 1.4;
 
     // Background arc
+    let arc_bg = if ui.visuals().dark_mode {
+        egui::Color32::from_gray(80)
+    } else {
+        egui::Color32::from_gray(200)
+    };
     draw_arc(
         painter,
         center,
@@ -624,7 +629,7 @@ fn render_gauge(ui: &egui::Ui, rect: egui::Rect, value: f32) {
         start_a,
         start_a + sweep,
         5.0,
-        egui::Color32::from_gray(80),
+        arc_bg,
     );
 
     // Fill arc
@@ -649,7 +654,11 @@ fn render_gauge(ui: &egui::Ui, rect: egui::Rect, value: f32) {
                 egui::pos2(center.x + a.cos() * r_in, center.y + a.sin() * r_in),
                 egui::pos2(center.x + a.cos() * r_out, center.y + a.sin() * r_out),
             ],
-            egui::Stroke::new(1.2, egui::Color32::from_gray(140)),
+            egui::Stroke::new(1.2, if ui.visuals().dark_mode {
+                egui::Color32::from_gray(140)
+            } else {
+                egui::Color32::from_gray(160)
+            }),
         );
     }
 

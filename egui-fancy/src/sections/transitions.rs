@@ -77,7 +77,7 @@ impl std::fmt::Debug for TransitionsSection {
 impl TransitionsSection {
     pub fn show(&mut self, ui: &mut egui::Ui) {
         ui.heading("Animated Transitions");
-        ui.add_space(4.0);
+        ui.add_space(8.0);
         ui.label("Showcases the animation system with transition patterns and easing curve visualizations.");
         ui.add_space(12.0);
 

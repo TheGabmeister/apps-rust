@@ -154,8 +154,9 @@ impl eframe::App for FancyShowcaseApp {
                             section.icon().to_string()
                         };
 
+                        let font_size = if sidebar_width > 120.0 { 14.0 } else { 18.0 };
                         let button = egui::Button::new(
-                            egui::RichText::new(&text).size(14.0),
+                            egui::RichText::new(&text).size(font_size),
                         )
                         .fill(if is_active {
                             if self.is_dark_mode {
@@ -194,7 +195,6 @@ impl eframe::App for FancyShowcaseApp {
             // Offset content to avoid sidebar overlap when collapsed
             let margin = SIDEBAR_COLLAPSED_WIDTH + 8.0;
             ui.add_space(8.0);
-            ui.add_space(0.0);
             let available = ui.available_rect_before_wrap();
             let content_rect = egui::Rect::from_min_max(
                 egui::pos2(available.left() + margin, available.top()),

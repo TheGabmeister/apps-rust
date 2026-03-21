@@ -77,7 +77,9 @@ The sidebar is the primary navigation element. It has two states:
 - **Expanded**: Shows icon + text label for each section, plus theme toggle and app title
 - **Collapsed**: Shows icon only, narrow width
 
-**Behavior**: The sidebar overlays the content (does not push it). When expanded, it floats over the gallery content with a subtle shadow/backdrop. The collapse/expand transition is animated using the animation helper with ease-out-cubic.
+**Implementation**: The sidebar is rendered as an `egui::Area` pinned to the left edge, not a `SidePanel`. This allows it to float over the content rather than push it. A painted backdrop (semi-transparent rect) fills behind the sidebar when expanded.
+
+**Behavior**: When expanded, it floats over the gallery content with a subtle shadow/backdrop. The collapse/expand transition animates the area width each frame using the animation helper with ease-out-cubic, driving a `set_width()` call on the Area.
 
 **Toggle**: A hamburger/arrow icon button at the top of the sidebar triggers the transition.
 
@@ -178,7 +180,7 @@ Demonstrates egui's panel system and navigation patterns, comparing idiomatic an
 
 **Idiomatic egui panels**:
 - `TopBottomPanel::top()` — app header bar
-- `SidePanel::left()` — navigation panel (this is what the gallery sidebar uses)
+- `SidePanel::left()` — navigation panel (shown here as an idiomatic example; the app shell's own sidebar is an `egui::Area`-based overlay, not a SidePanel)
 - `SidePanel::right()` — properties/inspector panel
 - `CentralPanel` — main content area
 - Nested `ScrollArea` inside panels

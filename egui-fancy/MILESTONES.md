@@ -18,7 +18,8 @@
 - [ ] `animation.rs` — `Animation` struct + 6 easing curves (linear, ease-in-out cubic, ease-out cubic, ease-out elastic, ease-out bounce, ease-in quad)
 - [ ] `theme.rs` — light/dark `Visuals` configuration, theme toggle
 - [ ] `sections/mod.rs` — `Section` enum with all 6 variants
-- [ ] Collapsible overlay sidebar — icon+label expanded, icon-only collapsed, animated with ease-out-cubic
+- [ ] Stub section structs — empty `ButtonsSection`, `SlidersSection`, `DataVizSection`, `DashboardSection`, `PanelsSection`, `TransitionsSection` so `FancyShowcaseApp` compiles
+- [ ] Collapsible overlay sidebar — `egui::Area` pinned to left edge (not `SidePanel`), icon+label expanded, icon-only collapsed, animated width via ease-out-cubic, painted backdrop when expanded
 - [ ] Placeholder content area — each section shows a "Coming soon" panel until implemented
 - [ ] Clean `cargo run` showing navigable shell
 
@@ -37,16 +38,20 @@ impl Animation {
     pub fn is_active(&self, ctx: &egui::Context) -> bool;
 }
 
-// sections/mod.rs
+// sections/mod.rs — no trait; sections are called directly by field
 pub enum Section { Buttons, Sliders, DataViz, Dashboard, Panels, Transitions }
-pub trait SectionView {
-    fn title(&self) -> &str;
-    fn icon(&self) -> &str;
-    fn show(&mut self, ui: &mut egui::Ui);
-}
+
+// Each section module exposes a struct + show() free function (or inherent method).
+// Stub versions must be present in M1 so AppState compiles:
+//   sections/buttons.rs:     pub struct ButtonsSection { /* empty */ }
+//   sections/sliders.rs:     pub struct SlidersSection { /* empty */ }
+//   sections/data_viz.rs:    pub struct DataVizSection { /* empty */ }
+//   sections/dashboard.rs:   pub struct DashboardSection { /* empty */ }
+//   sections/panels.rs:      pub struct PanelsSection { /* empty */ }
+//   sections/transitions.rs: pub struct TransitionsSection { /* empty */ }
 
 // app.rs
-pub struct AppState {
+pub struct FancyShowcaseApp {
     pub active_section: Section,
     pub is_dark_mode: bool,
     pub sidebar_expanded: bool,

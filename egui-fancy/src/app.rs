@@ -35,8 +35,8 @@ impl Default for FancyShowcaseApp {
             sliders: SlidersSection::default(),
             data_viz: DataVizSection::default(),
             dashboard: DashboardSection::default(),
-            panels: PanelsSection,
-            transitions: TransitionsSection,
+            panels: PanelsSection::default(),
+            transitions: TransitionsSection::default(),
         }
     }
 }

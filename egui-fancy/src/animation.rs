@@ -12,6 +12,26 @@ pub enum Easing {
 }
 
 impl Easing {
+    pub const ALL: &[Easing] = &[
+        Easing::Linear,
+        Easing::EaseInOutCubic,
+        Easing::EaseOutCubic,
+        Easing::EaseOutElastic,
+        Easing::EaseOutBounce,
+        Easing::EaseInQuad,
+    ];
+
+    pub fn label(self) -> &'static str {
+        match self {
+            Easing::Linear => "Linear",
+            Easing::EaseInOutCubic => "Ease In-Out Cubic",
+            Easing::EaseOutCubic => "Ease Out Cubic",
+            Easing::EaseOutElastic => "Ease Out Elastic",
+            Easing::EaseOutBounce => "Ease Out Bounce",
+            Easing::EaseInQuad => "Ease In Quad",
+        }
+    }
+
     pub fn apply(self, t: f32) -> f32 {
         let t = t.clamp(0.0, 1.0);
         match self {

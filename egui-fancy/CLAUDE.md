@@ -7,7 +7,7 @@ A portfolio-quality egui/eframe widget gallery. Desktop-only native app (1400x90
 - **M1 — Foundation**: COMPLETE (app shell, sidebar, animation system, theme toggle, section stubs)
 - **M2 — Sections 1–3**: COMPLETE (Buttons & Interactions, Sliders & Inputs, Data Visualization)
 - **M3 — Dashboard Grid**: COMPLETE (resizable/reorderable tile grid with 5 content types)
-- **M4 — Sections 5–6**: NOT STARTED (Panels & Navigation, Animated Transitions)
+- **M4 — Sections 5–6**: COMPLETE (Panels & Navigation, Animated Transitions)
 - **M5 — Polish**: NOT STARTED
 
 ## Build & Run
@@ -34,8 +34,8 @@ src/
     sliders.rs            - Section 2: stock + custom inputs (range slider, knob, progress bar, focus glow)
     data_viz.rs           - Section 3: egui_plot charts + painter-drawn gauge/sparklines/donut
     dashboard.rs          - Section 4: resizable/reorderable tile grid (sparkline, gauge, stat card, controls, log)
-    panels.rs             - Section 5: stub (M4)
-    transitions.rs        - Section 6: stub (M4)
+    panels.rs             - Section 5: idiomatic panels, tab bar, breadcrumbs, file tree, split pane
+    transitions.rs        - Section 6: transition demos, easing visualizer, before/after comparison
 ```
 
 ## Key Conventions
@@ -46,8 +46,9 @@ src/
 - `lerp_color()` helper is in `sections::buttons` (pub)
 - egui_plot 0.34 API: `Line::new(name, points)` and `BarChart::new(name, bars)` — name is first arg
 - `Painter::rect_stroke()` requires 4th arg `egui::StrokeKind::Outside`
-- Unit struct sections (panels, transitions) use direct construction, not `::default()`
-- `DashboardSection` has fields and uses `::default()` construction
+- `egui::Margin::same()` and `Margin::symmetric()` take `i8`, not `f32` — use integer literals (e.g., `Margin::same(8)`)
+- `Easing::ALL` and `Easing::label()` are available for iterating/displaying all easing variants
+- All sections now have fields and use `::default()` construction
 
 ## Interface Contract (from M1, locked)
 The `FancyShowcaseApp` struct fields and `Animation` API signatures in `MILESTONES.md` are frozen. New sections must work against these without changing them.

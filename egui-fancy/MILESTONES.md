@@ -104,16 +104,16 @@ pub struct FancyShowcaseApp {
 
 ## M4 — Sections 5–6
 
-- [ ] **Panels & Navigation** (`sections/panels.rs`)
+- [x] **Panels & Navigation** (`sections/panels.rs`)
   - Idiomatic: TopBottomPanel, SidePanel, CentralPanel, nested ScrollArea, CollapsingHeader accordion
   - Navigation patterns: tab bar with animated sliding underline, breadcrumb trail, collapsible file tree
   - Exotic: split pane with draggable divider via `allocate_rect()` + pointer tracking, labeled "Custom"
-- [ ] **Animated Transitions** (`sections/transitions.rs`)
+- [x] **Animated Transitions** (`sections/transitions.rs`)
   - Transition demos: fade, slide (H+V), scale, fade+slide combo — each with Play + Reverse buttons
   - Easing curve visualizer: line graph per curve, animated dot, moving square showing motion feel
   - Before/after comparison: instant vs animated state change
-- [ ] Wire both sections into `AppState`
-- [ ] `cargo run` — all 6 sections navigable and complete
+- [x] Wire both sections into `AppState`
+- [x] `cargo run` — all 6 sections navigable and complete
 
 ---
 

@@ -1,26 +1,33 @@
 use iced::widget::{
-    button, column, container, pick_list, row, rule, scrollable, text,
+    button, column, container, pick_list, row, rule, scrollable, text, text_input,
     pane_grid::{self, PaneGrid},
 };
 use iced::{Element, Fill};
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum PaneContent {
-    Text,
+    Editor,
+    ColorSwatch,
     Counter,
-    Colors,
+    Placeholder,
 }
 
 impl PaneContent {
-    const ALL: &'static [PaneContent] = &[PaneContent::Text, PaneContent::Counter, PaneContent::Colors];
+    const ALL: &'static [PaneContent] = &[
+        PaneContent::Editor,
+        PaneContent::ColorSwatch,
+        PaneContent::Counter,
+        PaneContent::Placeholder,
+    ];
 }
 
 impl std::fmt::Display for PaneContent {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            PaneContent::Text => write!(f, "Text"),
+            PaneContent::Editor => write!(f, "Editor"),
+            PaneContent::ColorSwatch => write!(f, "Color Swatch"),
             PaneContent::Counter => write!(f, "Counter"),
-            PaneContent::Colors => write!(f, "Colors"),
+            PaneContent::Placeholder => write!(f, "Placeholder"),
         }
     }
 }
@@ -29,11 +36,16 @@ impl std::fmt::Display for PaneContent {
 pub struct PaneState {
     pub content: PaneContent,
     pub counter: i32,
+    pub editor_text: String,
 }
 
 impl PaneState {
     fn new(content: PaneContent) -> Self {
-        Self { content, counter: 0 }
+        Self {
+            content,
+            counter: 0,
+            editor_text: String::new(),
+        }
     }
 }
 
@@ -49,12 +61,12 @@ impl Default for State {
         let config = pane_grid::Configuration::Split {
             axis: pane_grid::Axis::Vertical,
             ratio: 0.5,
-            a: Box::new(pane_grid::Configuration::Pane(PaneState::new(PaneContent::Text))),
+            a: Box::new(pane_grid::Configuration::Pane(PaneState::new(PaneContent::Editor))),
             b: Box::new(pane_grid::Configuration::Split {
                 axis: pane_grid::Axis::Horizontal,
                 ratio: 0.5,
                 a: Box::new(pane_grid::Configuration::Pane(PaneState::new(PaneContent::Counter))),
-                b: Box::new(pane_grid::Configuration::Pane(PaneState::new(PaneContent::Colors))),
+                b: Box::new(pane_grid::Configuration::Pane(PaneState::new(PaneContent::ColorSwatch))),
             }),
         };
         let panes = pane_grid::State::with_configuration(config);
@@ -77,13 +89,14 @@ pub enum Message {
     ContentChanged(pane_grid::Pane, PaneContent),
     Increment(pane_grid::Pane),
     Decrement(pane_grid::Pane),
+    EditorChanged(pane_grid::Pane, String),
 }
 
 pub fn update(state: &mut State, message: Message) {
     match message {
         Message::SplitH(pane) => {
             if let Some((new_pane, _)) =
-                state.panes.split(pane_grid::Axis::Horizontal, pane, PaneState::new(PaneContent::Text))
+                state.panes.split(pane_grid::Axis::Horizontal, pane, PaneState::new(PaneContent::Placeholder))
             {
                 state.focus = Some(new_pane);
                 state.pane_count += 1;
@@ -91,7 +104,7 @@ pub fn update(state: &mut State, message: Message) {
         }
         Message::SplitV(pane) => {
             if let Some((new_pane, _)) =
-                state.panes.split(pane_grid::Axis::Vertical, pane, PaneState::new(PaneContent::Text))
+                state.panes.split(pane_grid::Axis::Vertical, pane, PaneState::new(PaneContent::Placeholder))
             {
                 state.focus = Some(new_pane);
                 state.pane_count += 1;
@@ -119,6 +132,7 @@ pub fn update(state: &mut State, message: Message) {
             if let Some(pane_state) = state.panes.get_mut(pane) {
                 pane_state.content = content;
                 pane_state.counter = 0;
+                pane_state.editor_text.clear();
             }
         }
         Message::Increment(pane) => {
@@ -129,6 +143,11 @@ pub fn update(state: &mut State, message: Message) {
         Message::Decrement(pane) => {
             if let Some(pane_state) = state.panes.get_mut(pane) {
                 pane_state.counter -= 1;
+            }
+        }
+        Message::EditorChanged(pane, value) => {
+            if let Some(pane_state) = state.panes.get_mut(pane) {
+                pane_state.editor_text = value;
             }
         }
     }
@@ -160,9 +179,10 @@ pub fn view(state: &State) -> Element<'_, Message> {
         .padding(6);
 
         let body: Element<Message> = match pane_state.content {
-            PaneContent::Text => view_text_content(),
+            PaneContent::Editor => view_editor_content(pane, &pane_state.editor_text),
+            PaneContent::ColorSwatch => view_color_swatch(),
             PaneContent::Counter => view_counter_content(pane, pane_state.counter),
-            PaneContent::Colors => view_color_content(),
+            PaneContent::Placeholder => view_placeholder(),
         };
 
         let content = container(body)
@@ -220,21 +240,35 @@ fn view_controls<'a>(pane: pane_grid::Pane, pane_count: usize) -> Element<'a, Me
     .into()
 }
 
-fn view_text_content<'a>() -> Element<'a, Message> {
-    let lines = [
-        "This is a text pane.",
-        "You can split it horizontally or vertically.",
-        "Try dragging panes to rearrange them.",
-        "Resize by dragging the borders between panes.",
-        "Change the content type using the dropdown above.",
-    ];
+fn view_editor_content(pane: pane_grid::Pane, editor_text: &str) -> Element<'_, Message> {
+    let input = text_input("Type something here...", editor_text)
+        .on_input(move |val| Message::EditorChanged(pane, val));
 
-    let mut col = column![].spacing(4);
-    for line in lines {
-        col = col.push(text(line).size(13));
-    }
+    let preview = container(
+        scrollable(
+            text(if editor_text.is_empty() {
+                "Your text will appear here as you type...".to_string()
+            } else {
+                editor_text.to_string()
+            })
+            .size(13),
+        )
+        .height(Fill),
+    )
+    .padding(8)
+    .width(Fill)
+    .height(Fill)
+    .style(container::bordered_box);
 
-    scrollable(col).height(Fill).into()
+    column![
+        text("Text Editor").size(13),
+        input,
+        text("Preview:").size(12),
+        preview,
+    ]
+    .spacing(6)
+    .height(Fill)
+    .into()
 }
 
 fn view_counter_content(pane: pane_grid::Pane, counter: i32) -> Element<'static, Message> {
@@ -254,30 +288,55 @@ fn view_counter_content(pane: pane_grid::Pane, counter: i32) -> Element<'static,
     .into()
 }
 
-fn view_color_content<'a>() -> Element<'a, Message> {
-    let colors = [
-        ("Red", [1.0, 0.3, 0.3]),
-        ("Green", [0.3, 0.8, 0.3]),
-        ("Blue", [0.3, 0.5, 1.0]),
-        ("Yellow", [1.0, 0.9, 0.3]),
-        ("Purple", [0.7, 0.3, 1.0]),
-        ("Cyan", [0.3, 0.9, 0.9]),
+fn view_color_swatch<'a>() -> Element<'a, Message> {
+    let swatches = [
+        ("Red",    [0.90, 0.30, 0.30]),
+        ("Orange", [0.95, 0.60, 0.20]),
+        ("Yellow", [0.95, 0.85, 0.25]),
+        ("Green",  [0.30, 0.75, 0.35]),
+        ("Blue",   [0.30, 0.50, 0.90]),
+        ("Purple", [0.65, 0.30, 0.85]),
     ];
 
-    let mut col = column![].spacing(4);
-    for (name, [r, g, b]) in colors {
-        let swatch = container(text(name).size(13))
-            .padding([6, 12])
-            .width(Fill)
-            .style(move |_theme: &iced::Theme| {
-                container::Style {
-                    background: Some(iced::Background::Color(iced::Color::from_rgb(r, g, b))),
-                    text_color: Some(iced::Color::BLACK),
-                    ..container::Style::default()
-                }
-            });
+    let mut col = column![text("Color Swatches").size(13)].spacing(4);
+    for (name, [r, g, b]) in swatches {
+        let swatch = container(
+            text(format!("  {}  ", name)).size(14),
+        )
+        .padding([10, 16])
+        .width(Fill)
+        .style(move |_theme: &iced::Theme| {
+            container::Style {
+                background: Some(iced::Background::Color(iced::Color::from_rgb(r, g, b))),
+                text_color: Some(iced::Color::BLACK),
+                border: iced::Border {
+                    radius: 4.0.into(),
+                    ..Default::default()
+                },
+                ..container::Style::default()
+            }
+        });
         col = col.push(swatch);
     }
 
     scrollable(col).height(Fill).into()
+}
+
+fn view_placeholder<'a>() -> Element<'a, Message> {
+    let placeholder_text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. \
+        Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. \
+        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris \
+        nisi ut aliquip ex ea commodo consequat.\n\n\
+        This is a placeholder pane. Use the dropdown above to switch \
+        to a different content type, or split this pane to create more.";
+
+    scrollable(
+        column![
+            text("Placeholder").size(16),
+            text(placeholder_text).size(13),
+        ]
+        .spacing(8),
+    )
+    .height(Fill)
+    .into()
 }

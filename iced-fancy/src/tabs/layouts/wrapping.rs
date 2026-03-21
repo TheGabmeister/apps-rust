@@ -23,7 +23,8 @@ pub fn view(items: &[String], wrap_spacing: f32) -> Element<'_, super::Message> 
     ]
     .spacing(8);
 
-    let mut wrap = Wrap::new()
+    // Horizontal wrap
+    let mut h_wrap = Wrap::new()
         .spacing(wrap_spacing)
         .line_spacing(wrap_spacing)
         .padding(4.0);
@@ -34,13 +35,38 @@ pub fn view(items: &[String], wrap_spacing: f32) -> Element<'_, super::Message> 
         )
         .padding([4, 12])
         .style(container::bordered_box);
-        wrap = wrap.push(chip);
+        h_wrap = h_wrap.push(chip);
     }
 
-    let wrap_container = container(wrap).width(Fill).padding(8);
+    // Vertical wrap
+    let mut v_wrap = Wrap::new_vertical()
+        .spacing(wrap_spacing)
+        .line_spacing(wrap_spacing)
+        .padding(4.0);
+
+    for (i, label) in items.iter().enumerate() {
+        let chip = container(
+            text(format!("{} {}", label, i + 1)).size(13),
+        )
+        .padding([4, 12])
+        .style(container::bordered_box);
+        v_wrap = v_wrap.push(chip);
+    }
+
+    let h_section = column![
+        text("Horizontal").size(13),
+        container(h_wrap).width(Fill).padding(4),
+    ]
+    .spacing(4);
+
+    let v_section = column![
+        text("Vertical").size(13),
+        container(v_wrap).width(Fill).height(200).padding(4),
+    ]
+    .spacing(4);
 
     super::demo_card(
         "Wrap (Flow Layout)",
-        column![controls, spacing_control, wrap_container].spacing(10),
+        column![controls, spacing_control, h_section, v_section].spacing(10),
     )
 }

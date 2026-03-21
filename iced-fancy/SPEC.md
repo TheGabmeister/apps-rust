@@ -14,7 +14,7 @@ A desktop-only showcase application that pushes iced 0.14 to its absolute limits
 - **Zero external assets** — everything embedded or procedurally generated. Single binary, no asset folder.
 - `tokio` feature required for `iced::time::every` (animation subscriptions).
 - `canvas` feature required for Canvas widget and iced_aw's `color_picker`.
-- iced_aw's bundled font (`ICED_AW_FONT_BYTES`) used for icons — no external font files.
+- iced_aw's bundled font (`ICED_AW_FONT_BYTES`) registered for internal widget glyphs. For sidebar/tab icons, use Unicode symbols (the iced_aw font does not contain general-purpose icons).
 
 ---
 

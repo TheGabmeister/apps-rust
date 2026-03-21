@@ -1,7 +1,7 @@
 # iced-fancy — Milestones
 
 ## Milestone 1: Scaffolding
-**Status:** [ ] Not started
+**Status:** [x] Complete
 
 Set up the full project structure with empty tab stubs. The app should compile and open a working window with sidebar navigation before any real tab content exists.
 
@@ -14,10 +14,10 @@ Set up the full project structure with empty tab stubs. The app should compile a
 - `Cargo.toml` — all features enabled
 
 ### Visual Check
-- [ ] Window opens
-- [ ] Sidebar shows all 5 tab labels with icons
-- [ ] Clicking each tab switches the active view
-- [ ] Light/dark toggle works globally
+- [x] Window opens
+- [x] Sidebar shows all 5 tab labels with icons
+- [x] Clicking each tab switches the active view
+- [x] Light/dark toggle works globally
 
 ---
 

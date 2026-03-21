@@ -915,6 +915,7 @@ name = "egui_fancy"
 version = "0.1.0"
 dependencies = [
  "eframe",
+ "egui",
  "egui_extras",
  "egui_plot",
 ]

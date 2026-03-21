@@ -13,15 +13,15 @@
 **Must be completed before any parallel work begins.**
 
 ### Deliverables
-- [ ] `main.rs` — `eframe::run_native` with 1400×900 window, "egui Showcase" title
-- [ ] `app.rs` — `FancyShowcaseApp` struct, `eframe::App::update()` routing
-- [ ] `animation.rs` — `Animation` struct + 6 easing curves (linear, ease-in-out cubic, ease-out cubic, ease-out elastic, ease-out bounce, ease-in quad)
-- [ ] `theme.rs` — light/dark `Visuals` configuration, theme toggle
-- [ ] `sections/mod.rs` — `Section` enum with all 6 variants
-- [ ] Stub section structs — empty `ButtonsSection`, `SlidersSection`, `DataVizSection`, `DashboardSection`, `PanelsSection`, `TransitionsSection` so `FancyShowcaseApp` compiles
-- [ ] Collapsible overlay sidebar — `egui::Area` pinned to left edge (not `SidePanel`), icon+label expanded, icon-only collapsed, animated width via ease-out-cubic, painted backdrop when expanded
-- [ ] Placeholder content area — each section shows a "Coming soon" panel until implemented
-- [ ] Clean `cargo run` showing navigable shell
+- [x] `main.rs` — `eframe::run_native` with 1400×900 window, "egui Showcase" title
+- [x] `app.rs` — `FancyShowcaseApp` struct, `eframe::App::update()` routing
+- [x] `animation.rs` — `Animation` struct + 6 easing curves (linear, ease-in-out cubic, ease-out cubic, ease-out elastic, ease-out bounce, ease-in quad)
+- [x] `theme.rs` — light/dark `Visuals` configuration, theme toggle
+- [x] `sections/mod.rs` — `Section` enum with all 6 variants
+- [x] Stub section structs — empty `ButtonsSection`, `SlidersSection`, `DataVizSection`, `DashboardSection`, `PanelsSection`, `TransitionsSection` so `FancyShowcaseApp` compiles
+- [x] Collapsible overlay sidebar — `egui::Area` pinned to left edge (not `SidePanel`), icon+label expanded, icon-only collapsed, animated width via ease-out-cubic, painted backdrop when expanded
+- [x] Placeholder content area — each section shows a "Coming soon" panel until implemented
+- [x] Clean `cargo run` showing navigable shell
 
 ### Interface Contract (locked after M1)
 All parallel agents in M2/M4 must work against these signatures without changing them:

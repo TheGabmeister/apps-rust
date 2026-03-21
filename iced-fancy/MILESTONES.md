@@ -86,7 +86,7 @@ Implement Tab 4 — generative art canvas, animated charts, and the shared `Tick
 ---
 
 ## Milestone 5: Audio Mixer
-**Status:** [ ] Not started
+**Status:** [x] Complete
 
 Implement Tab 5 — the full connected audio mixer dashboard with per-channel controls and real-time waveform rendering.
 
@@ -99,12 +99,12 @@ Implement Tab 5 — the full connected audio mixer dashboard with per-channel co
 - Shares `Tick` subscription with Canvas tab logic
 
 ### Visual Check
-- [ ] 4 channel strips render with all controls
-- [ ] Volume, EQ, frequency, and amplitude sliders update the waveform instantly
-- [ ] Wave type pick list switches waveform shape in real time
-- [ ] Color picker sets the waveform stroke color per channel
-- [ ] Enable toggler mutes/unmutes a channel (removed from master mix)
-- [ ] Master waveform combines all enabled channels
-- [ ] Layout adapts: horizontal strips on wide screens, vertical stack on narrow
-- [ ] Switching away stops the subscription (CPU idles)
-- [ ] Works in both light and dark theme
+- [x] 4 channel strips render with all controls
+- [x] Volume, EQ, frequency, and amplitude sliders update the waveform instantly
+- [x] Wave type pick list switches waveform shape in real time
+- [x] Color picker sets the waveform stroke color per channel
+- [x] Enable toggler mutes/unmutes a channel (removed from master mix)
+- [x] Master waveform combines all enabled channels
+- [x] Layout adapts: horizontal strips on wide screens, vertical stack on narrow
+- [x] Switching away stops the subscription (CPU idles)
+- [x] Works in both light and dark theme

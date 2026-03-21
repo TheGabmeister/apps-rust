@@ -58,8 +58,11 @@ impl App {
             Message::Mixer(msg) => tabs::mixer::update(&mut self.mixer, msg),
             Message::Tick(_now) => {
                 let dt = 1.0 / 60.0_f32; // ~16ms per tick
-                if self.active_tab == TabId::Canvas || self.active_tab == TabId::Mixer {
+                if self.active_tab == TabId::Canvas {
                     tabs::canvas::update(&mut self.canvas, tabs::canvas::Message::Tick(dt));
+                }
+                if self.active_tab == TabId::Mixer {
+                    tabs::mixer::update(&mut self.mixer, tabs::mixer::Message::Tick(dt));
                 }
             }
         }

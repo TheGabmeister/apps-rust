@@ -1,5 +1,6 @@
-use iced::widget::{button, column, container, row, rule, text, toggler, Space};
-use iced::{Element, Fill, Font, Theme};
+use iced::widget::{column, container, rule, toggler, Space};
+use iced::{Element, Fill, Font, Length, Theme};
+use iced_aw::sidebar::{Sidebar, TabLabel};
 
 use crate::app::Message;
 
@@ -31,51 +32,37 @@ impl TabId {
         }
     }
 
-    pub fn icon(self) -> &'static str {
+    pub fn icon(self) -> char {
         match self {
-            TabId::Gallery => "\u{25A6}",   // ▦
-            TabId::Layouts => "\u{2637}",   // ☷
-            TabId::PaneGrid => "\u{2590}",  // ▐
-            TabId::Canvas => "\u{25D0}",    // ◐
-            TabId::Mixer => "\u{266B}",     // ♫
+            TabId::Gallery => '\u{25A6}',   // ▦
+            TabId::Layouts => '\u{2637}',   // ☷
+            TabId::PaneGrid => '\u{2590}',  // ▐
+            TabId::Canvas => '\u{25D0}',    // ◐
+            TabId::Mixer => '\u{266B}',     // ♫
         }
     }
 }
 
 pub fn view(active: TabId, is_dark: bool) -> Element<'static, Message, Theme> {
-    let header = text("iced-fancy")
-        .size(20)
-        .font(Font::MONOSPACE);
+    let mut sidebar = Sidebar::new(Message::TabSelected)
+        .icon_font(Font::DEFAULT)
+        .text_size(14.0)
+        .icon_size(16.0)
+        .width(Length::Fill)
+        .spacing(4.0);
 
-    let mut tabs = column![].spacing(4);
     for &tab in TabId::ALL {
-        let icon = text(tab.icon()).size(16);
-        let label = text(tab.label()).size(14);
-        let content = row![icon, label].spacing(8).align_y(iced::Alignment::Center);
-
-        let btn = if tab == active {
-            button(content)
-                .width(Fill)
-                .style(button::primary)
-                .on_press(Message::TabSelected(tab))
-        } else {
-            button(content)
-                .width(Fill)
-                .style(button::secondary)
-                .on_press(Message::TabSelected(tab))
-        };
-        tabs = tabs.push(btn);
+        sidebar = sidebar.push(tab, TabLabel::IconText(tab.icon(), tab.label().to_string()));
     }
+    sidebar = sidebar.set_active_tab(&active);
 
     let theme_toggle = toggler(is_dark)
         .label("Dark mode")
         .on_toggle(Message::ToggleTheme)
         .size(20);
 
-    let sidebar = column![
-        header,
-        rule::horizontal(1),
-        tabs,
+    let sidebar_col = column![
+        sidebar,
         Space::new().height(Fill),
         rule::horizontal(1),
         theme_toggle,
@@ -84,7 +71,7 @@ pub fn view(active: TabId, is_dark: bool) -> Element<'static, Message, Theme> {
     .padding(16)
     .width(200);
 
-    container(sidebar)
+    container(sidebar_col)
         .height(Fill)
         .style(container::bordered_box)
         .into()

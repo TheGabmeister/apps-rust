@@ -138,4 +138,4 @@ TabLabel::Icon(char)
 TabLabel::Text(String)
 TabLabel::IconText(char, String)
 ```
-Note: We built a custom sidebar with buttons instead. If switching to iced_aw's Sidebar, the TabId type must implement `Eq + Clone`.
+Note: Currently using iced_aw's `Sidebar` widget (per spec). If it causes visual issues later, it's a single-file swap back to a custom Column of buttons — the `TabId` enum and app integration are identical either way. `TabId` must implement `Eq + Clone`. Use `.icon_font(Font::DEFAULT)` to render Unicode icons instead of iced_aw's internal font.
